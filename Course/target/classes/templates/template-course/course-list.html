@@ -16,6 +16,15 @@
 
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .truncateLongTexts {
+            width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+    </style>
 </head>
 
 <body>
@@ -40,21 +49,9 @@
             <div class="row">
                 <div class="col-md-3">
                     <h2 class="fs-5 mb-4">Chủ đề</h2>
-                    <div class="topic-item input-group d-flex align-items-center mb-1">
+                    <div class="topic-item input-group d-flex align-items-center mb-1" th:each="topicList : ${topicList}">
                         <input type="radio" value="Backend" id="backend" name="topic">
-                        <label for="backend" class="ms-2 fs-5">Lập trình Backend</label>
-                    </div>
-                    <div class="topic-item input-group d-flex align-items-center mb-1">
-                        <input type="radio" value="Frontend" id="frontend" name="topic">
-                        <label for="frontend" class="ms-2 fs-5">Lập trình Frontend</label>
-                    </div>
-                    <div class="topic-item input-group d-flex align-items-center mb-1">
-                        <input type="radio" value="Di động" id="mobile" name="topic">
-                        <label for="mobile" class="ms-2 fs-5">Lập trình di động</label>
-                    </div>
-                    <div class="topic-item input-group d-flex align-items-center mb-1">
-                        <input type="radio" value="Database" id="database" name="topic">
-                        <label for="database" class="ms-2 fs-5">Cơ sở dữ liệu</label>
+                        <label for="backend" class="ms-2 fs-5" th:text="${topicList.getName()}">Lập trình Backend</label>
                     </div>
                 </div>
 
@@ -68,7 +65,7 @@
                         </div>
                     </div>
                     <div class="course-list row">
-                        <div class="col-md-4">
+                        <div class="col-md-4" th:each="courseList : ${courseList}">
                             <a href="./detail.html">
                                 <div class="course-item shadow-sm rounded mb-4">
                                     <div class="course-item-image">
@@ -76,83 +73,22 @@
                                             alt="khoa hoc">
                                     </div>
                                     <div class="course-item-info p-3">
-                                        <h2 class="fs-5 mb-3 text-dark">Spring Boot - Web Back End</h2>
-                                        <p class="type fw-light text-black-50">Trực tuyến</p>
+                                        <h2 class="truncateLongTexts fs-5 mb-3 text-dark" th:text="${courseList.getName()}"></h2>
+                                        <p class="type fw-light text-black-50" th:text="${courseList.getType()}">Trực tuyến</p>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-4">
-                            <a href="./detail.html">
-                                <div class="course-item shadow-sm rounded mb-4">
-                                    <div class="course-item-image">
-                                        <img src="https://media.techmaster.vn/api/static/8028/bpfneoc51co8tcg6lek0"
-                                            alt="khoa hoc">
-                                    </div>
-                                    <div class="course-item-info p-3">
-                                        <h2 class="fs-5 mb-3 text-dark">Spring Boot - Web Back End</h2>
-                                        <p class="type fw-light text-black-50">Phòng lab</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="./detail.html">
-                                <div class="course-item shadow-sm rounded mb-4">
-                                    <div class="course-item-image">
-                                        <img src="https://media.techmaster.vn/api/static/8028/bpfneoc51co8tcg6lek0"
-                                            alt="khoa hoc">
-                                    </div>
-                                    <div class="course-item-info p-3">
-                                        <h2 class="fs-5 mb-3 text-dark">Spring Boot - Web Back End</h2>
-                                        <p class="type fw-light text-black-50">Phòng lab</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="./detail.html">
-                                <div class="course-item shadow-sm rounded mb-4">
-                                    <div class="course-item-image">
-                                        <img src="https://media.techmaster.vn/api/static/8028/bpfneoc51co8tcg6lek0"
-                                            alt="khoa hoc">
-                                    </div>
-                                    <div class="course-item-info p-3">
-                                        <h2 class="fs-5 mb-3 text-dark">Spring Boot - Web Back End</h2>
-                                        <p class="type fw-light text-black-50">Trực tuyến</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="./detail.html">
-                                <div class="course-item shadow-sm rounded mb-4">
-                                    <div class="course-item-image">
-                                        <img src="https://media.techmaster.vn/api/static/8028/bpfneoc51co8tcg6lek0"
-                                            alt="khoa hoc">
-                                    </div>
-                                    <div class="course-item-info p-3">
-                                        <h2 class="fs-5 mb-3 text-dark">Spring Boot - Web Back End</h2>
-                                        <p class="type fw-light text-black-50">Trực tuyến</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="./detail.html">
-                                <div class="course-item shadow-sm rounded mb-4">
-                                    <div class="course-item-image">
-                                        <img src="https://media.techmaster.vn/api/static/8028/bpfneoc51co8tcg6lek0"
-                                            alt="khoa hoc">
-                                    </div>
-                                    <div class="course-item-info p-3">
-                                        <h2 class="fs-5 mb-3 text-dark">Spring Boot - Web Back End</h2>
-                                        <p class="type fw-light text-black-50">Phòng lab</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+
                     </div>
+
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+<!--                            <li class="page-item"><a class="page-link">Previous</a></li>-->
+                            <li class="page-item" th:each="item : ${#numbers.sequence(0,courseList.totalPages-1)}" ><a class="page-link" th:href="@{/index(currentPage=${item})}" th:text="${item}">1</a></li>
+<!--                            <li class="page-item"><a class="page-link">Next</a></li>-->
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -162,5 +98,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
-
+<script th:inline="javascript" type="text/javascript">
+    console.log([[${courseList}]])
+</script>
 </html>
