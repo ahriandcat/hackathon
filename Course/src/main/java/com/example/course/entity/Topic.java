@@ -3,6 +3,8 @@ package com.example.course.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,4 +21,7 @@ public class Topic {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @ManyToMany(mappedBy = "topics")
+    private List<Course> courses = new ArrayList<>();
 }

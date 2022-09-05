@@ -49,9 +49,13 @@
             <div class="row">
                 <div class="col-md-3">
                     <h2 class="fs-5 mb-4">Chủ đề</h2>
+                    <div class="topic-item input-group d-flex align-items-center mb-1">
+                        <input type="radio" value="All" id="backend" class="topic-check" name="topic" onchange="changeTopic(this)">
+                        <label for="backend" class="ms-2 fs-5" th:value="All">All</label>
+                    </div>
                     <div class="topic-item input-group d-flex align-items-center mb-1" th:each="topicList : ${topicList}">
-                        <input type="radio" value="Backend" id="backend" name="topic">
-                        <label for="backend" class="ms-2 fs-5" th:text="${topicList.getName()}">Lập trình Backend</label>
+                        <input type="radio" id="" name="topic" th:value="${topicList.getName()}" onchange="changeTopic(this)">
+                        <label for="backend" class="ms-2 fs-5 topic-check" th:text="${topicList.getName()}">Lập trình Backend</label>
                     </div>
                 </div>
 
@@ -59,8 +63,8 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="seach-form d-flex align-items-center rounded shadow-sm mb-4 pe-3">
-                                <input type="text" placeholder="Tìm kiếm khóa học" class="form-control border-0 seach-form-input">
-                                <span class="text-black-50 seach-form-button"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input type="text" placeholder="Tìm kiếm khóa học" class="form-control border-0 seach-form-input" th:value="${param.searchName}">
+                                <span class="text-black-50 search-btn"><i class="fa-solid fa-magnifying-glass"></i></span>
                             </div>
                         </div>
                     </div>
@@ -85,7 +89,7 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
 <!--                            <li class="page-item"><a class="page-link">Previous</a></li>-->
-                            <li class="page-item" th:each="item : ${#numbers.sequence(0,courseList.totalPages-1)}" ><a class="page-link" th:href="@{/index(currentPage=${item})}" th:text="${item}">1</a></li>
+                            <li class="page-item page-link" th:each="item : ${#numbers.sequence(0,courseList.totalPages-1)}" th:value="${item}"  th:text="${item}" onclick="pagination(this)"></li>
 <!--                            <li class="page-item"><a class="page-link">Next</a></li>-->
                         </ul>
                     </nav>
@@ -98,7 +102,73 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
-<script th:inline="javascript" type="text/javascript">
-    console.log([[${courseList}]])
+<script>
+    let url = new URL(window.location);
+    document.querySelector(".search-btn").addEventListener("click", function(){
+        if (document.querySelector(".seach-form-input").value.trim() != ""){
+            let data = [{
+                key: 'searchName',
+                value: document.querySelector(".seach-form-input").value
+            }]
+            reloadMultipleParam(data, true);
+        }
+       else {
+            window.location.href = "index";
+        }
+    })
+    //
+    let pagination = (e) => {
+        // if (url.searchParams.has('search')){
+        //     window.location.href = "index?currentPage="+e.value+"&search="+url.searchParams.get('search');
+        // }
+        // else {
+        //     window.location.href = "index?currentPage="+e.value;
+        // }
+        let data = [
+            {
+                key:'pageNo',
+                value: e.value
+            },
+        ]
+        if (document.querySelector(".seach-form-input").value.trim() != ""){
+            data.push({
+                key: 'searchName',
+                value: document.querySelector(".seach-form-input").value
+            })
+        }
+
+        reloadMultipleParam(data, true);
+    }
+
+    let changeTopic = (e) => {
+        if (e.value != "All"){
+            let data = [
+                {
+                    key:'searchTopic',
+                    value: e.value
+                },
+            ]
+            reloadMultipleParam(data, true);
+        }
+        else {
+            window.location.href = "index";
+        }
+    }
+    let reloadMultipleParam = (data, removeQuery) => {
+        let url = new URL(window.location);
+        if (removeQuery) {
+            url.search = '';
+        }
+        // define new url with searching condition
+        data.forEach(element => {
+            (url.searchParams.has(element.key) ? url.searchParams.set(element.key, element.value) : url.searchParams.append(element.key, element.value));
+        })
+        url.search = url.searchParams.toString();
+        url = url.toString();
+        // reload the page
+        window.location = url;
+    };
+
+
 </script>
 </html>
