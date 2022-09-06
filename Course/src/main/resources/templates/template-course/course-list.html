@@ -50,12 +50,12 @@
                 <div class="col-md-3">
                     <h2 class="fs-5 mb-4">Chủ đề</h2>
                     <div class="topic-item input-group d-flex align-items-center mb-1">
-                        <input type="radio" value="All" id="backend" class="topic-check" name="topic" onchange="changeTopic(this)">
-                        <label for="backend" class="ms-2 fs-5" th:value="All">All</label>
+                        <input type="radio" value="All" id="all" class="topic-check" name="" onchange="changeTopic(this)">
+                        <label for="all" class="ms-2 fs-5 topic-check" th:value="All">All</label>
                     </div>
                     <div class="topic-item input-group d-flex align-items-center mb-1" th:each="topicList : ${topicList}">
-                        <input type="radio" id="" name="topic" th:value="${topicList.getName()}" onchange="changeTopic(this)">
-                        <label for="backend" class="ms-2 fs-5 topic-check" th:text="${topicList.getName()}">Lập trình Backend</label>
+                        <input type="radio" id="backend" name="" th:value="${topicList.getId()}" onchange="changeTopic(this)">
+                        <label for="backend" class="ms-2 fs-5 topic-check" th:text="${topicList.getName()}"></label>
                     </div>
                 </div>
 
@@ -102,8 +102,8 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
-<script>
-    let url = new URL(window.location);
+<script type="text/javascript" th:inline="javascript">
+    let topicId = [[${searchTopic}]]
     document.querySelector(".search-btn").addEventListener("click", function(){
         if (document.querySelector(".seach-form-input").value.trim() != ""){
             let data = [{
@@ -111,6 +111,12 @@
                 value: document.querySelector(".seach-form-input").value
             }]
             reloadMultipleParam(data, true);
+            if (topicId != 0){
+                data.push({
+                    key: 'searchTopic',
+                    value: topicId
+                })
+            }
         }
        else {
             window.location.href = "index";
@@ -137,6 +143,13 @@
             })
         }
 
+        if (topicId != 0){
+            data.push({
+                key: 'searchTopic',
+                value: topicId
+            })
+        }
+
         reloadMultipleParam(data, true);
     }
 
@@ -148,6 +161,12 @@
                     value: e.value
                 },
             ]
+            if (document.querySelector(".seach-form-input").value.trim() != ""){
+                data.push({
+                    key: 'searchName',
+                    value: document.querySelector(".seach-form-input").value
+                })
+            }
             reloadMultipleParam(data, true);
         }
         else {

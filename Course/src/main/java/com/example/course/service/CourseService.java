@@ -15,7 +15,13 @@ public class CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
-    public Page<Course> findByNameContainsIgnoreCase(String name, Pageable pageable) {
-        return courseRepository.findByNameContainsIgnoreCase(name,pageable);
+    public Page<Course> findByNameContainsIgnoreCase(Long topicId,String name, int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 9);
+        if(topicId == 0){
+            return courseRepository.findByNameContainsIgnoreCase(name,pageable);
+        }
+        return courseRepository.findCoursesByTopicId(topicId,name,pageable);
     }
+
+
 }

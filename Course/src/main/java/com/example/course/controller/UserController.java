@@ -28,7 +28,7 @@ public class UserController {
     public String getUserCourseList(Model model,@RequestParam(required = false) Map<String, String> qparams) {
         int pageNo = 0;
         String searchName = "";
-        String searchTopic = "";
+        Long searchTopic = Long.valueOf(0);
         if (qparams.get("pageNo") != null){
             pageNo = Integer.parseInt(qparams.get("pageNo"));
         }
@@ -36,14 +36,13 @@ public class UserController {
             searchName = qparams.get("searchName");
         }
         if (qparams.get("searchTopic") != null){
-            searchTopic = qparams.get("searchTopic");
+            searchTopic = Long.valueOf(qparams.get("searchTopic"));
         }
-//        Page<Course> page = courseService.getAllCourses(pageNo);
-        Pageable pageable = PageRequest.of(pageNo, 9);
-        Page<Course> courseListByName = courseService.findByNameContainsIgnoreCase(searchName,pageable);
-//        System.out.println("test=================== "+ page.getTotalPages());
+        System.out.println("========="+searchTopic);
+        Page<Course> courseListByName = courseService.findByNameContainsIgnoreCase(searchTopic,searchName,pageNo);
         model.addAttribute("courseList",courseListByName);
         model.addAttribute("topicList",topicService.getAllTopics());
+        model.addAttribute("searchTopic",searchTopic);
         return "template-course/course-list";
     }
 }
