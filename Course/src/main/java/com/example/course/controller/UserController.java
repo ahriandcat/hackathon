@@ -39,7 +39,6 @@ public class UserController {
         if (qparams.get("searchTopic") != null){
             searchTopic = Long.valueOf(qparams.get("searchTopic"));
         }
-        System.out.println("========="+searchTopic);
         Page<Course> courseListByName = courseService.findByNameContainsIgnoreCase(searchTopic,searchName,pageNo);
         model.addAttribute("courseList",courseListByName);
         model.addAttribute("topicList",topicService.getAllTopics());
@@ -52,5 +51,26 @@ public class UserController {
         Course currentCourse = courseService.findCourseById((long) id);
         model.addAttribute("currentCourse",currentCourse);
         return "template-course/detail";
+    }
+
+    @GetMapping("/index/onlab")
+    public String onlabCourse(Model model,@RequestParam(required = false) Map<String, String> qparams){
+        int pageNo = 0;
+        String searchName = "";
+        Long searchTopic = Long.valueOf(0);
+        if (qparams.get("pageNo") != null){
+            pageNo = Integer.parseInt(qparams.get("pageNo"));
+        }
+        if (qparams.get("searchName") != null){
+            searchName = qparams.get("searchName");
+        }
+        if (qparams.get("searchTopic") != null){
+            searchTopic = Long.valueOf(qparams.get("searchTopic"));
+        }
+        Page<Course> courseList = courseService.findByNameContainsIgnoreCaseWithTypeOnlab(searchTopic,searchName,pageNo);
+        model.addAttribute("courseList",courseList);
+        model.addAttribute("topicList",topicService.getAllTopics());
+        model.addAttribute("searchTopic",searchTopic);
+        return "template-course/course-onlab-list";
     }
 }

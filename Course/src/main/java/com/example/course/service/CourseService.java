@@ -22,8 +22,16 @@ public class CourseService {
         }
         return courseRepository.findCoursesByTopicId(topicId,name,pageable);
     }
-
     public Course findCourseById(Long id) {
         return courseRepository.findCourseById(id);
+    }
+
+
+    public Page<Course> findByNameContainsIgnoreCaseWithTypeOnlab(Long topicId,String searchName, int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 9);
+        if(topicId == 0){
+            return courseRepository.findByTypeEqualsOnlabAndNameContainsIgnoreCase("onlab",searchName,pageable);
+        }
+        return courseRepository.findCoursesByTopicIdWithTypeOnlab(topicId,searchName,pageable);
     }
 }
