@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,13 +7,10 @@
     <title>Danh sách khóa học</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
     <!-- Link icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
         .truncateLongTexts {
@@ -26,7 +22,6 @@
 
     </style>
 </head>
-
 <body>
     <div class="header d-flex align-items-center">
         <div class="container-fluid">
@@ -70,7 +65,7 @@
                     </div>
                     <div class="course-list row">
                         <div class="col-md-4" th:each="courseList : ${courseList}">
-                            <a href="./detail.html">
+                            <a th:href="@{'/detail/' + ${courseList.id}}">
                                 <div class="course-item shadow-sm rounded mb-4">
                                     <div class="course-item-image">
                                         <img src="https://media.techmaster.vn/api/static/8028/bpfneoc51co8tcg6lek0"
@@ -103,7 +98,7 @@
         crossorigin="anonymous"></script>
 </body>
 <script type="text/javascript" th:inline="javascript">
-    console.log([[${searchTopic}]])
+    let topicId = [[${searchTopic}]]
     document.querySelector(".search-btn").addEventListener("click", function(){
         if (document.querySelector(".seach-form-input").value.trim() != ""){
             let data = [{
@@ -111,6 +106,12 @@
                 value: document.querySelector(".seach-form-input").value
             }]
             reloadMultipleParam(data, true);
+            if (topicId != 0){
+                data.push({
+                    key: 'searchTopic',
+                    value: topicId
+                })
+            }
         }
        else {
             window.location.href = "index";
@@ -149,13 +150,18 @@
 
     let changeTopic = (e) => {
         if (e.value != "All"){
-            topicId = e.value;
             let data = [
                 {
                     key:'searchTopic',
                     value: e.value
                 },
             ]
+            if (document.querySelector(".seach-form-input").value.trim() != ""){
+                data.push({
+                    key: 'searchName',
+                    value: document.querySelector(".seach-form-input").value
+                })
+            }
             reloadMultipleParam(data, true);
         }
         else {

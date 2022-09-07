@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
@@ -44,5 +45,12 @@ public class UserController {
         model.addAttribute("topicList",topicService.getAllTopics());
         model.addAttribute("searchTopic",searchTopic);
         return "template-course/course-list";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String courseDetail(Model model, @PathVariable int id){
+        Course currentCourse = courseService.findCourseById((long) id);
+        model.addAttribute("currentCourse",currentCourse);
+        return "template-course/detail";
     }
 }

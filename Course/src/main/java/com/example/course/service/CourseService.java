@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -23,5 +23,7 @@ public class CourseService {
         return courseRepository.findCoursesByTopicId(topicId,name,pageable);
     }
 
-
+    public Course findCourseById(Long id) {
+        return courseRepository.findCourseById(id);
+    }
 }
