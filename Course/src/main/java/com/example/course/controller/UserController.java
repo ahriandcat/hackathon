@@ -68,7 +68,7 @@ public class UserController {
             searchTopic = Long.valueOf(qparams.get("searchTopic"));
         }
         Page<Course> courseList = courseService.findByNameContainsIgnoreCaseWithTypeOnlab(searchTopic,searchName,pageNo);
-        model.addAttribute("courseList",courseList);
+        model.addAttribute("courseListOnlab",courseList);
         model.addAttribute("topicList",topicService.getAllTopics());
         model.addAttribute("searchTopic",searchTopic);
         return "template-course/course-onlab-list";

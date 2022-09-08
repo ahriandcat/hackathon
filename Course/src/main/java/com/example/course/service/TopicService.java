@@ -18,15 +18,4 @@ public class TopicService {
     public List<Topic> getAllTopics() {
         return topicRepository.findAll();
     }
-
-    public List<Course> getCoursesByTopicId(Long topicId) {
-        Optional<Topic> nullAbleTopic  = topicRepository.findById(topicId);
-        if (nullAbleTopic.isPresent()){
-            Topic topic = nullAbleTopic.get();
-            return topic.getCourses();
-        }
-        else {
-            throw new RuntimeException();
-        }
-    }
 }

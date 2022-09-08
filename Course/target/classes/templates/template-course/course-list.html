@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="course-item-info p-3">
                                         <h2 class="truncateLongTexts fs-5 mb-3 text-dark" th:text="${courseList.getName()}"></h2>
-                                        <p class="type fw-light text-black-50" th:text="${courseList.getType()}">Trực tuyến</p>
+                                        <p class="type fw-light text-black-50" th:text="${courseList.getType()}"></p>
                                     </div>
                                 </div>
                             </a>
@@ -112,6 +112,13 @@
         else {
             $('.all-topic').prop('checked', true)
         }
+    }
+    window.onload = function WindowLoad(event) {
+        $('.pagination').each(function(){
+            if ($(this).find('li').val() == -1){
+                $(this).find('li').remove();
+            }
+        })
     }
     document.querySelector(".search-btn").addEventListener("click", function(){
         if (document.querySelector(".seach-form-input").value.trim() != ""){

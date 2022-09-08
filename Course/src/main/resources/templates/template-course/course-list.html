@@ -23,21 +23,27 @@
     </style>
 </head>
 <body>
-    <div class="header d-flex align-items-center">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-start align-items-center">
-                <div class="logo">
-                    <a th:href="@{'/index'}">
-                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png" alt="logo">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{'/index'}"><img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png" alt="logo" style="width: 120px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Courses
                     </a>
-                </div>
-                <div class="menu">
-                    <a class="text-white text-uppercase ms-5" href="./course-onlab-list.html">On Lab</a>
-                    <a class="text-white text-uppercase ms-3" href="./course-online-list.html">Online</a>
-                </div>
-            </div>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" th:href="@{'/index/onlab'}">on lab</a></li>
+                        <li><a class="dropdown-item" href="#">online</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
 
     <div class="course-container mt-5">
         <div class="container">
@@ -73,7 +79,7 @@
                                     </div>
                                     <div class="course-item-info p-3">
                                         <h2 class="truncateLongTexts fs-5 mb-3 text-dark" th:text="${courseList.getName()}"></h2>
-                                        <p class="type fw-light text-black-50" th:text="${courseList.getType()}">Trực tuyến</p>
+                                        <p class="type fw-light text-black-50" th:text="${courseList.getType()}"></p>
                                     </div>
                                 </div>
                             </a>
@@ -82,10 +88,10 @@
                     </div>
 
                     <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-<!--                            <li class="page-item"><a class="page-link">Previous</a></li>-->
+                        <ul class="pagination" th:if="${courseList.totalPages > 1}">
+                            <!--                            <li class="page-item"><a class="page-link">Previous</a></li>-->
                             <li class="page-item page-link" th:each="item : ${#numbers.sequence(0,courseList.totalPages-1)}" th:value="${item}"  th:text="${item}" onclick="pagination(this)"></li>
-<!--                            <li class="page-item"><a class="page-link">Next</a></li>-->
+                            <!--                            <li class="page-item"><a class="page-link">Next</a></li>-->
                         </ul>
                     </nav>
                 </div>
